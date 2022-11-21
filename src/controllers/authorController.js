@@ -51,8 +51,8 @@ const login = async (req, res) => {
         const token = jwt.sign({ authorId: existUser._id, }, 'project1group2');
         return res.status(200).send({ status: true, token: token })
     }
-    catch (err) {
-        console.log(err)
+    catch (err) {  
+        console.log(err) 
         return res.status(500).send({ status: false, error: err.message })
     }
 }

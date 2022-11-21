@@ -3,7 +3,7 @@ const { isValidBody, isValidObjectId, isValidText } = require('../util/valitor.j
 
 //createBlog
 const createBlog = async (req, res) => {
-    try {   
+    try {     
         const reqBody = req.body
         const { title, body, authorId, category } = reqBody;
 
@@ -12,7 +12,7 @@ const createBlog = async (req, res) => {
         if (!title) return res.status(400).send({ status: false, message: 'Please fill title.' })
         if (!body) return res.status(400).send({ status: false, message: 'Please fill body.' })
         if (!authorId) return res.status(400).send({ status: false, message: 'Please fill authorId.' })
-        if (!category) return res.status(400).send({ status: false, message: 'Please fill cateegory.' })
+        if (!category) return res.status(400).send({ status: false, message: 'Please fill category.' })
 
         if (!isValidText(title)) return res.status(400).send({ status: false, message: 'Enter valid title.' });
         if (!isValidText(body)) return res.status(400).send({ status: false, message: 'Enter valid body.' });
@@ -21,7 +21,10 @@ const createBlog = async (req, res) => {
 
         //Authorization
         if (authorId != req.user) return res.status(403).send({ status: false, message: 'You are unauthorized.' });
-
+  
+        if(reqBody.isPublished === true)
+        reqBody.publishedAt = Date.now() 
+        
         //blog creation
         const newBlog = await blogModel.create(reqBody);
         return res.status(201).send({ status: true, data: newBlog });
@@ -104,7 +107,7 @@ const deleteBlog = async (req, res) => {
 
         return res.status(200).send({ status: true, message: `'${blog.title}' blog deleted sucessfully.` })
     }
-    catch (err) {
+    catch (err) {   
         console.log(err)
         return res.status(500).send({ status: false, error: err.message })
     }

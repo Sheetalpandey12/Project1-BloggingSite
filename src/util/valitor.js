@@ -30,7 +30,7 @@ const isValidName = (name) => {
 }
 
 //title
-const isValidTitleEnum = (title) => ["Mr", "Mrs", "Miss"].indexOf(title) !== -1;
+const isValidTitleEnum = (title) => ["Mr", "Mrs", "Miss"].indexOf(title) !== -1;   
 
 //text
 const isValidText = (text) => {
